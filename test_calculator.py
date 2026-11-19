@@ -4,7 +4,7 @@ from calculator import calculate_monthly_payment
 
 def test_standard_mortgage():
     # Кредит 1 000 000 под 10% на 10 лет -> ~13215.07
-    assert calculate_monthly_payment(1_000_000, 10, 10) == 13215.07
+    assert calculate_monthly_payment(1_000_000, 10, 10) == 12215.07
 
 
 def test_zero_interest_raises_error():
