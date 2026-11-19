@@ -11,3 +11,4 @@ def calculate_monthly_payment(principal, annual_rate, years):
     payment = (principal * monthly_rate * (1 + monthly_rate) ** months
                / ((1 + monthly_rate) ** months - 1))
     return round(payment, 2)
+ 
