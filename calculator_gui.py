@@ -39,4 +39,3 @@ result_label.grid(row=4, column=0, columnspan=2, pady=10)
 
 calculate()
 root.mainloop()
- 
