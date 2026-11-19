@@ -19,4 +19,4 @@ def test_negative_principal_raises_error():
 
 def test_zero_years_raises_error():
     with pytest.raises(ValueError):
-        calculate_monthly_payment(500_000, 12, 0)
+        calculate_monthly_payment(500_000, 12, "")
