@@ -1,0 +1,41 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  DEPLOY_DIR: /opt/mortgage-calculator
+
+jobs:
+  lint:
+    runs-on: [self-hosted, linux]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install flake8
+        run: python3 -m pip install --user --break-system-packages flake8==7.0.0
+      - name: Run flake8
+        run: python3 -m flake8 --max-line-length=120 --exclude=.git,__pycache__ .
+
+  test:
+    needs: lint
+    runs-on: [self-hosted, linux]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pytest
+        run: python3 -m pip install --user --break-system-packages pytest==8.2.0
+      - name: Run pytest
+        run: python3 -m pytest test_calculator.py -v
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, linux]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to production
+        run: |
+          echo "Deploy to production..."
+          mkdir -p "$DEPLOY_DIR"
+          rsync -av --delete --exclude='.git' --exclude='__pycache__' ./ "$DEPLOY_DIR/"
